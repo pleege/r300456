@@ -67,10 +67,10 @@ export function CompetitorCard({ competitors }: CompetitorCardProps) {
           </Table>
         </div>
 
-        <div className="mt-4 p-3 bg-accent/50 rounded-lg flex items-start gap-2">
-          <AlertCircle className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+        <div className="mt-4 p-3 bg-destructive/10 border border-destructive/20 rounded-lg flex items-start gap-2">
+          <AlertCircle className="h-4 w-4 text-destructive mt-0.5 shrink-0" />
           <p className="text-sm text-muted-foreground">
-            公司在MEMS代工领域具有全球领先地位，与国际巨头Silex(已被收购)同属第一梯队。相比国内同业，公司聚焦纯代工模式，毛利率和技术壁垒更高。
+            <strong>提示：</strong>赛微电子本期净利润含巨额非经常性损益，导致净利率和PE失真，请重点关注PS(市销率)及营收规模。
           </p>
         </div>
       </CardContent>
