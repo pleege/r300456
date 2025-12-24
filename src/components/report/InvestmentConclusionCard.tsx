@@ -5,6 +5,7 @@ import { CheckCircle, AlertTriangle, Target, TrendingUp } from 'lucide-react';
 
 interface InvestmentConclusionCardProps {
   conclusion: InvestmentConclusion;
+  oneLiner?: string;
 }
 
 const ratingColors: Record<string, string> = {
@@ -17,7 +18,10 @@ const ratingColors: Record<string, string> = {
 
 export function InvestmentConclusionCard({
   conclusion,
+  oneLiner,
 }: InvestmentConclusionCardProps) {
+  const hasTargetPrice = conclusion.targetPrice > 0;
+
   return (
     <Card>
       <CardHeader className="pb-4">
@@ -27,29 +31,36 @@ export function InvestmentConclusionCard({
             {conclusion.rating}
           </Badge>
         </div>
+        {oneLiner && (
+          <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
+            {oneLiner}
+          </p>
+        )}
       </CardHeader>
       <CardContent>
-        {/* 目标价和涨幅 */}
-        <div className="flex items-center gap-6 mb-6 p-4 bg-accent/50 rounded-lg">
-          <div className="flex items-center gap-2">
-            <Target className="h-5 w-5 text-primary" />
-            <div>
-              <p className="text-sm text-muted-foreground">目标价</p>
-              <p className="text-2xl font-bold text-primary">
-                ¥{conclusion.targetPrice.toFixed(2)}
-              </p>
+        {/* 目标价和涨幅 - 仅在有目标价时显示 */}
+        {hasTargetPrice && (
+          <div className="flex items-center gap-6 mb-6 p-4 bg-accent/50 rounded-lg">
+            <div className="flex items-center gap-2">
+              <Target className="h-5 w-5 text-primary" />
+              <div>
+                <p className="text-sm text-muted-foreground">目标价</p>
+                <p className="text-2xl font-bold text-primary">
+                  ¥{conclusion.targetPrice.toFixed(2)}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-chart-1" />
+              <div>
+                <p className="text-sm text-muted-foreground">上涨空间</p>
+                <p className="text-2xl font-bold text-chart-1">
+                  +{conclusion.upside.toFixed(1)}%
+                </p>
+              </div>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-chart-1" />
-            <div>
-              <p className="text-sm text-muted-foreground">上涨空间</p>
-              <p className="text-2xl font-bold text-chart-1">
-                +{conclusion.upside.toFixed(1)}%
-              </p>
-            </div>
-          </div>
-        </div>
+        )}
 
         {/* 核心逻辑和风险 */}
         <div className="grid md:grid-cols-2 gap-6">

@@ -22,7 +22,10 @@ export function StockReportPage({ report }: StockReportPageProps) {
       <main className="container py-6">
         <div className="space-y-6">
           {/* 投资核心结论 */}
-          <InvestmentConclusionCard conclusion={report.conclusion} />
+          <InvestmentConclusionCard 
+            conclusion={report.conclusion} 
+            oneLiner="【基本面改善+资产收益扭曲】主业MEMS晶圆代工处于复苏周期，但2025年业绩受巨额非经常性损益（投资收益/股权处置）严重干扰，表观PE失效，需剔除水分看主业。"
+          />
 
           {/* 业务模式分析 */}
           <BusinessModelCard businessModel={report.businessModel} />

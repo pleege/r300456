@@ -55,11 +55,9 @@ export function ValuationCard({ valuation }: ValuationCardProps) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>指标</TableHead>
-                  <TableHead className="text-right">当前</TableHead>
-                  <TableHead className="text-right">历史均值</TableHead>
-                  <TableHead className="text-right">行业均值</TableHead>
-                  <TableHead className="text-center">评估</TableHead>
+                  <TableHead>估值口径</TableHead>
+                  <TableHead className="text-right">PE (倍数)</TableHead>
+                  <TableHead>评价</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -69,16 +67,16 @@ export function ValuationCard({ valuation }: ValuationCardProps) {
                     <TableRow key={item.metric}>
                       <TableCell className="font-medium">{item.metric}</TableCell>
                       <TableCell className="text-right font-semibold">
-                        {item.currentValue.toFixed(1)}
+                        {item.currentValue.toFixed(1)}x
                       </TableCell>
-                      <TableCell className="text-right text-muted-foreground">
-                        {item.historicalAvg.toFixed(1)}
-                      </TableCell>
-                      <TableCell className="text-right text-muted-foreground">
-                        {item.industryAvg.toFixed(1)}
-                      </TableCell>
-                      <TableCell className="text-center">
+                      <TableCell>
                         <Badge variant={status.variant}>{status.label}</Badge>
+                        <span className="ml-2 text-xs text-muted-foreground">
+                          {item.metric === 'PE (TTM)' && '表观极低，失真，含一次性收益'}
+                          {item.metric === 'PE (FY0E 2025)' && '同样受非经影响'}
+                          {item.metric === 'PE (FY+1E 2026)' && '主业盈利尚无法支撑市值'}
+                          {item.metric === 'PE (Blended)' && '加权过渡值 (92%×FY0 + 8%×FY1)'}
+                        </span>
                       </TableCell>
                     </TableRow>
                   );
@@ -122,8 +120,9 @@ export function ValuationCard({ valuation }: ValuationCardProps) {
         </div>
 
         {/* 投资建议总结 */}
-        <div className="mt-6 p-4 bg-primary/10 border border-primary/20 rounded-lg">
-          <p className="text-sm text-foreground leading-relaxed">{valuation.summary}</p>
+        <div className="mt-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+          <h4 className="font-semibold text-foreground mb-2">投资建议：</h4>
+          <p className="text-sm text-muted-foreground leading-relaxed">{valuation.summary}</p>
         </div>
       </CardContent>
     </Card>
